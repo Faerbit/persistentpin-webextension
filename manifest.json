@@ -2,12 +2,16 @@
 
   "description": "Pins the same websites across browser restarts.",
   "manifest_version": 2,
-  "name": "persistentpin",
+  "name": "PersistentPin",
   "version": "1.0",
   "homepage_url": "https://github.com/Faerbit/persistentpin-webextension",
 
+  "options_ui": {
+      "page": "src/options.html"
+  },
+
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [ "src/background.js" ]
   },
 
   "permissions": [
