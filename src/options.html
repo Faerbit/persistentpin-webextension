@@ -6,29 +6,34 @@
     </head>
     <body>
         <div>
-            <button class="large">
+            <button class="large" id="btn-grab">
                 <i class="fa fa-hand-rock-o"></i> Grab current pinned tabs
             </button>
         </div>
         <table>
+            <thead>
             <tr><th>Websites</th></tr>
+            </thead>
+            <tbody id="tbl-websites">
             <tr><td>https://facebook.com/</td></tr>
             <tr class="selected"><td>https://github.com/</td></tr>
             <tr><td>https://twitter.com/</td></tr>
+            </tbody>
         </table>
         <div>
-            <button>
+            <button id="btn-edit">
                 <i class="fa fa-pencil"></i> Edit
             </button>
-            <button>
+            <button id="btn-up">
                 <i class="fa fa-arrow-up"></i> Up
             </button>
-            <button>
+            <button id="btn-down">
                 <i class="fa fa-arrow-down"></i> Down
             </button>
-            <button>
+            <button id="btn-delete">
                 <i class="fa fa-trash-o"></i> Delete
             </button>
         </div>
+        <script src="options.js"></script>
     </body>
 </html>

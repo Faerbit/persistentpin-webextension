@@ -4,16 +4,10 @@ button.large {
 
 div {
     text-align: center;
-    /*position: relative;
-    top: 10px;
-    bottom: 10px;*/
     margin: 15px;
 }
 
 table {
-    /*position: relative;
-    top: 20px;*/
-    /*bottom: 10px;*/
     width: 80%;
     border-collapse: collapse;
     margin:0 auto;
@@ -39,4 +33,9 @@ tr:hover {
 tr.selected {
     color: #fff;
     background-color: #4A90D9;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
 }
