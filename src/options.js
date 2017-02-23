@@ -95,6 +95,7 @@ function edit(event) {
     }
     var oldContent = selection.textContent;
     var editField = document.createElement("input");
+    editField.className = "edit";
     editField.type = "text";
     editField.value = oldContent;
     editField.addEventListener("keyup", function(event) {

@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
     </head>
     <body>
-        <div>
+        <div class="btns">
             <button class="large" id="btn-grab">
                 <i class="fa fa-hand-rock-o"></i> Grab current pinned tabs
             </button>
@@ -20,7 +20,7 @@
             <tr><td>https://twitter.com/</td></tr>
             </tbody>
         </table>
-        <div>
+        <div class="btns">
             <button id="btn-edit">
                 <i class="fa fa-pencil"></i> Edit
             </button>
@@ -33,6 +33,11 @@
             <button id="btn-delete">
                 <i class="fa fa-trash-o"></i> Delete
             </button>
+        </div>
+
+        <div class="ckbs">
+            <input type="checkbox" id="ckb-sync" />
+            <label for="ckb-sync">Sync pinned tabs across devices</label>
         </div>
         <script src="options.js"></script>
     </body>

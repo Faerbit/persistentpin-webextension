@@ -2,9 +2,15 @@ button.large {
     width: 80%;
 }
 
-div {
+div.btns {
     text-align: center;
     margin: 15px;
+}
+
+div.ckbs {
+    text-align: left;
+    margin: 25px;
+    margin-left: 10%;
 }
 
 table {
@@ -35,7 +41,7 @@ tr.selected {
     background-color: #4A90D9;
 }
 
-input {
+input.edit {
     width: 100%;
     box-sizing: border-box;
 }
