@@ -32,6 +32,14 @@ function renderTable(newSelection) {
         }
         new_tbody.appendChild(tr);
     }
+    if (pinned_websites.length == 0) {
+        var tr = document.createElement("tr");
+        var td = document.createElement("td");
+        tr.appendChild(td);
+        td.innerText = "Empty";
+        td.className = "empty";
+        new_tbody.appendChild(tr);
+    }
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
 }
 
@@ -134,6 +142,9 @@ function add(event) {
     var tbody = document.getElementById("tbl-websites");
     var tr = document.createElement("tr");
     if (selection == null) {
+        if (pinned_websites.length == 0) {
+            tbody.removeChild(tbody.firstChild);
+        }
         tbody.appendChild(tr);
     }
     else {

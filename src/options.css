@@ -41,6 +41,12 @@ tr.selected {
     background-color: #4A90D9;
 }
 
+td.empty {
+    text-align: center;
+    font-style: italic;
+    color: #aaa;
+}
+
 input.edit {
     width: 100%;
     box-sizing: border-box;
