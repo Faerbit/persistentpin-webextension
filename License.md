@@ -22,5 +22,5 @@ SOFTWARE.
 
 ===============================================================================
 
-Icons kindly provided by [Font Awesome](fontawesome.io). See
-[here](fontawesome.io/license) for full details.
+Icons kindly provided by [Font Awesome](fontawesome.io). See their
+[license](fontawesome.io/license) for full details.
