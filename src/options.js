@@ -2,19 +2,11 @@
 
 var pinned_websites = null;
 var selection = null;
-var sync = null;
 
 function save() {
-    if (sync == true) {
-        let settingWebsites =
-            browser.storage.sync.set({"pinned_websites": pinned_websites});
-        settingWebsites.then(null, onError);
-    }
-    else {
-        let settingWebsites =
-            browser.storage.local.set({"pinned_websites": pinned_websites});
-        settingWebsites.then(null, onError);
-    }
+    let settingWebsites =
+        browser.storage.local.set({"pinned_websites": pinned_websites});
+    settingWebsites.then(null, onError);
 }
 
 function select(event) {
@@ -209,21 +201,13 @@ function add(event) {
     editField.focus();
 }
 
-function setSync(event) {
-    let val = document.getElementById("ckb-sync").checked;
-    let settingSync = browser.storage.local.set({"sync": val});
-    settingSync.then(null, onError);
-}
-
 function onError(error) {
     console.log(`Error: ${error}`);
 }
 
 function init() {
-    let gettingSync = browser.storage.local.get("sync");
-    gettingSync.then(startLoading, onError);
-
-    document.getElementById("ckb-sync").addEventListener("click", setSync);
+    let gettingWebsites = browser.storage.local.get("pinned_websites");
+    gettingWebsites.then(finishLoading, onError);
 
     document.getElementById("btn-grab").addEventListener("click", grab);
     document.getElementById("btn-add").addEventListener("click", add);
@@ -231,23 +215,6 @@ function init() {
     document.getElementById("btn-up").addEventListener("click", up);
     document.getElementById("btn-down").addEventListener("click", down);
     document.getElementById("btn-delete").addEventListener("click", _delete);
-}
-
-function startLoading(item) {
-    sync = item.sync;
-    if (sync == null) {
-        sync = true;
-        setSync();
-    }
-    document.getElementById("ckb-sync").checked = sync;
-    if (sync == true) {
-        let gettingWebsites = browser.storage.sync.get("pinned_websites");
-        gettingWebsites.then(finishLoading, onError);
-    }
-    else {
-        let gettingWebsites = browser.storage.local.get("pinned_websites");
-        gettingWebsites.then(finishLoading, onError);
-    }
 }
 
 function finishLoading(item) {
