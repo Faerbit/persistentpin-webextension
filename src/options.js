@@ -44,7 +44,7 @@ function renderTable(newSelection) {
         var tr = document.createElement("tr");
         var td = document.createElement("td");
         tr.appendChild(td);
-        td.innerText = "Empty";
+        td.innerText = browser.i18n.getMessage("emptyRow");
         td.className = "empty";
         new_tbody.appendChild(tr);
     }
@@ -205,16 +205,29 @@ function onError(error) {
     console.log(`Error: ${error}`);
 }
 
+function i18n(element, i18n_name) {
+    element.innerHTML = element.innerHTML.replace(
+        "__MSG_" + i18n_name + "__",
+        browser.i18n.getMessage(i18n_name));
+}
+
 function init() {
     let gettingWebsites = browser.storage.local.get("pinned_websites");
     gettingWebsites.then(finishLoading, onError);
 
     document.getElementById("btn-grab").addEventListener("click", grab);
+    i18n(document.getElementById("btn-grab"), "grabButton");
     document.getElementById("btn-add").addEventListener("click", add);
+    i18n(document.getElementById("btn-add"), "addButton");
     document.getElementById("btn-edit").addEventListener("click", edit);
+    i18n(document.getElementById("btn-edit"), "editButton");
     document.getElementById("btn-up").addEventListener("click", up);
+    i18n(document.getElementById("btn-up"), "upButton");
     document.getElementById("btn-down").addEventListener("click", down);
+    i18n(document.getElementById("btn-down"), "downButton");
     document.getElementById("btn-delete").addEventListener("click", _delete);
+    i18n(document.getElementById("btn-delete"), "deleteButton");
+    i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
 }
 
 function finishLoading(item) {
