@@ -1,0 +1,38 @@
+{
+    "extensionDescription": {
+        "message": "Heftet immer die gleichen Websites nach jedem Browser-Neustart an.",
+        "description": "Description of the extension"
+    },
+    "grabButton": {
+        "message": "Sammel die aktuell angehefteten Tabs",
+        "description": "Grab button caption"
+    },
+    "addButton": {
+        "message": "Hinzufügen",
+        "description": "Add button caption"
+    },
+    "editButton": {
+        "message": "Editieren",
+        "description": "Edit button caption"
+    },
+    "upButton": {
+        "message": "Hoch",
+        "description": "Up button caption"
+    },
+    "downButton": {
+        "message": "Runter",
+        "description": "Down button caption"
+    },
+    "DeleteButton": {
+        "message": "Löschen",
+        "description": "Delete button caption"
+    },
+    "emptyRow": {
+        "message": "Leer",
+        "description": "Empty row, is shown when no entries are available"
+    },
+    "websitesTableHeader": {
+        "message": "Websites",
+        "description": "Websites table header"
+    }
+}
