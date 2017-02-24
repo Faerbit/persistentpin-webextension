@@ -4,4 +4,4 @@ prepare:
 	mkdir -p out
 
 package: prepare
-	zip -r out/persistentpin.xpi manifest.json src font-awesome-4.7.0/css/font-awesome.min.css font-awesome-4.7.0/fonts -x \*.swp \*.swo
+	zip -r out/persistentpin.xpi manifest.json src font-awesome-4.7.0/css/font-awesome.min.css font-awesome-4.7.0/fonts -x .\*
