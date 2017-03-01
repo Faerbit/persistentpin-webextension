@@ -12,5 +12,11 @@ package: prepare
 	font-awesome-4.7.0/fonts \
 	-x "*/.*"
 
+modify-manifest:
+	python3 modify-manifest.py
+
+release: clean modify-manifest package
+	git checkout manifest.json
+
 clean:
 	rm -rf out
