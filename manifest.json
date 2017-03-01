@@ -19,6 +19,13 @@
     "tabs"
   ],
 
-  "default_locale": "en"
+  "default_locale": "en",
+
+  "applications": {
+      "gecko": {
+          "id": "persistentpin@server.fake",
+          "strict_min_version": "42.0"
+      }
+  }
 
 }
