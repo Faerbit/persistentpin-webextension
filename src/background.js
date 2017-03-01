@@ -14,9 +14,7 @@ function openTabs(item) {
     opened_tabs = true;
 }
 
-browser.windows.onCreated.addListener(function() {
-    if (opened_tabs == false) {
-        let getWebsites = browser.storage.local.get("pinned_websites");
-        getWebsites.then(openTabs, onError);
-    }
-});
+if (opened_tabs == false) {
+    let getWebsites = browser.storage.local.get("pinned_websites");
+    getWebsites.then(openTabs, onError);
+}
