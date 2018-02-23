@@ -6,12 +6,20 @@ function onError(error) {
 }
 
 function openTabs(item) {
-    var pinned_websites = item.pinned_websites;
-    pinned_websites.forEach(function(website) {
-        browser.tabs.create({url: website, "pinned": true,
-            "active": false});
+    let getExistingPinnedTabs = browser.tabs.query({ "pinned": true });
+    getExistingPinnedTabs.then(
+        (existingPinnedTabs) => {
+            pinIds = existingPinnedTabs.map( tab => tab.id );
+            return browser.tabs.remove(pinIds);
+        }
+    ).then(() => {
+        var pinned_websites = item.pinned_websites;
+        pinned_websites.forEach(function(website) {
+            browser.tabs.create({url: website, "pinned": true,
+                "active": false});
+        });
+        opened_tabs = true;
     });
-    opened_tabs = true;
 }
 
 if (opened_tabs == false) {
