@@ -1,2 +1,4 @@
 .*.sw*
 out
+build
+.values.sh
