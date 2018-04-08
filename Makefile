@@ -18,9 +18,7 @@ modify-manifest:
 
 release: clean modify-manifest package
 	git checkout manifest.json
-	./.values.sh; web-ext sign \
-		--source-dir build \
-		--artifacts-dir out
+	bash -c '. ./.values.sh; web-ext sign --source-dir build --artifacts-dir out'
 
 clean:
 	rm -rf out
