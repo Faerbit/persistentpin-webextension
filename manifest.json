@@ -25,7 +25,7 @@
   "applications": {
       "gecko": {
           "id": "persistentpin@server.fake",
-          "strict_min_version": "42.0"
+          "strict_min_version": "57.0"
       }
   }
 
