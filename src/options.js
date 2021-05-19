@@ -1,3 +1,5 @@
+import { addMenuItem, removeMenuItem } from "./contextmenu.js";
+
 // global variables
 
 var pinned_websites = null;
@@ -201,6 +203,21 @@ function add(event) {
     editField.focus();
 }
 
+var context_menu_item = null;
+
+function contextMenuSlider(event) {
+    if (this.checked) {
+        let settingContextMenu = browser.storage.local.set({"context_menu_item": true});
+        settingContextMenu.then(null, onError);
+        addMenuItem();
+    }
+    else {
+        let settingContextMenu = browser.storage.local.set({"context_menu_item": false});
+        settingContextMenu.then(null, onError);
+        removeMenuItem();
+    }
+}
+
 function onError(error) {
     console.log(`Error: ${error}`);
 }
@@ -215,6 +232,9 @@ function init() {
     let gettingWebsites = browser.storage.local.get("pinned_websites");
     gettingWebsites.then(finishLoading, onError);
 
+    let gettingContextMenu = browser.storage.local.get("context_menu_item");
+    gettingContextMenu.then(finishLoading2, onError);
+
     document.getElementById("btn-grab").addEventListener("click", grab);
     i18n(document.getElementById("btn-grab"), "grabButton");
     document.getElementById("btn-add").addEventListener("click", add);
@@ -228,6 +248,8 @@ function init() {
     document.getElementById("btn-delete").addEventListener("click", _delete);
     i18n(document.getElementById("btn-delete"), "deleteButton");
     i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
+    document.getElementById("contextMenuSlider").addEventListener("change", contextMenuSlider);
+    i18n(document.getElementById("contextMenuSliderLabel"), "contextMenuSlider");
 }
 
 function finishLoading(item) {
@@ -239,5 +261,15 @@ function finishLoading(item) {
     }
     renderTable();
 }
+
+function finishLoading2(item) {
+    if (item.context_menu_item == null) {
+        document.getElementById("contextMenuSlider").checked = false;
+    }
+    else {
+        document.getElementById("contextMenuSlider").checked = item.context_menu_item;
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", init());

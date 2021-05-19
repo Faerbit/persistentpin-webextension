@@ -4,7 +4,7 @@
         "description": "Description of the extension"
     },
     "grabButton": {
-        "message": "Sammel die aktuell angehefteten Tabs",
+        "message": "Sammel' die aktuell angehefteten Tabs",
         "description": "Grab button caption"
     },
     "addButton": {
@@ -23,9 +23,13 @@
         "message": "Runter",
         "description": "Down button caption"
     },
-    "DeleteButton": {
+    "deleteButton": {
         "message": "Löschen",
         "description": "Delete button caption"
+    },
+    "contextMenuSlider": {
+        "message": "Füge \"Sammel' die aktuell angehefteten Tabs\" zum Tabkontextmenü hinzu",
+        "description": "Label for slider which adds grab action to tab context menu"
     },
     "emptyRow": {
         "message": "Leer",

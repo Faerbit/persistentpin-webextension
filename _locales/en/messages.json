@@ -4,7 +4,7 @@
         "description": "Description of the extension"
     },
     "grabButton": {
-        "message": "Grab current pinned tabs",
+        "message": "Grab currently pinned tabs",
         "description": "Grab button caption"
     },
     "addButton": {
@@ -23,9 +23,13 @@
         "message": "Down",
         "description": "Down button caption"
     },
-    "DeleteButton": {
+    "deleteButton": {
         "message": "Delete",
         "description": "Delete button caption"
+    },
+    "contextMenuSlider": {
+        "message": "Add \"Grab currently pinned tabs\" to tab context menu",
+        "description": "Label for slider which adds grab action to tab context menu"
     },
     "emptyRow": {
         "message": "Empty",

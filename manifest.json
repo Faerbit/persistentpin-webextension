@@ -3,7 +3,7 @@
   "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
   "name": "PersistentPin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage_url": "https://github.com/Faerbit/persistentpin-webextension",
 
   "options_ui": {
@@ -11,12 +11,13 @@
   },
 
   "background": {
-    "scripts": [ "src/background.js" ]
+    "page": "src/background.html"
   },
 
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "contextMenus"
   ],
 
   "default_locale": "en",

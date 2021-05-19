@@ -1,3 +1,5 @@
+import { addMenuItem } from "./contextmenu.js";
+
 // only open on the inital startup
 var opened_tabs = false;
 
@@ -9,11 +11,11 @@ function openTabs(item) {
     let getExistingPinnedTabs = browser.tabs.query({ "pinned": true });
     getExistingPinnedTabs.then(
         (existingPinnedTabs) => {
-            pinIds = existingPinnedTabs.map( tab => tab.id );
+            let pinIds = existingPinnedTabs.map( tab => tab.id );
             return browser.tabs.remove(pinIds);
         }
     ).then(() => {
-        var pinned_websites = item.pinned_websites;
+        let pinned_websites = item.pinned_websites;
         pinned_websites.forEach(function(website) {
             browser.tabs.create({url: website, "pinned": true,
                 "active": false});
@@ -22,7 +24,16 @@ function openTabs(item) {
     });
 }
 
+function setupMenuItem(item) {
+    if (item.context_menu_item != null && item.context_menu_item) {
+        addMenuItem();
+    }
+}
+
+
 if (opened_tabs == false) {
     let getWebsites = browser.storage.local.get("pinned_websites");
     getWebsites.then(openTabs, onError);
+    let gettingContextMenu = browser.storage.local.get("context_menu_item");
+    gettingContextMenu.then(setupMenuItem, onError);
 }
