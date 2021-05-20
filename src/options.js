@@ -221,11 +221,11 @@ function contextMenuSlider(event) {
 function syncSlider(event) {
     if (this.checked) {
         let settingSync = storage.set_syncing(true);
-        settingSync.then(null, onError);
+        settingSync.then(load, onError);
     }
     else {
         let settingSync = storage.set_syncing(false);
-        settingSync.then(null, onError);
+        settingSync.then(load, onError);
     }
 }
 
@@ -239,12 +239,16 @@ function i18n(element, i18n_name) {
         browser.i18n.getMessage(i18n_name));
 }
 
-function init() {
+function load() {
     let gettingWebsites = storage.get_pinned_websites();
     gettingWebsites.then(finishLoading, onError);
 
     let gettingContextMenu = storage.get_context_menu_item();
     gettingContextMenu.then(finishLoading2, onError);
+}
+
+function init() {
+    load();
 
     let gettingSyncing = storage.get_syncing();
     gettingSyncing.then(finishLoading3, onError);
@@ -269,8 +273,7 @@ function init() {
 
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message === "refresh") {
-            let gettingWebsites = storage.get_pinned_websites();
-            gettingWebsites.then(finishLoading, onError);
+            load();
         }
     });
 }
@@ -295,7 +298,6 @@ function finishLoading2(item) {
 }
 
 function finishLoading3(item) {
-    console.log(item);
     document.getElementById("syncSlider").checked = item;
 }
 

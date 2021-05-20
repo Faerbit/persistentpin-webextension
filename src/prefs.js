@@ -14,10 +14,14 @@ class Storage {
 
     async set_syncing(syncing) {
         if (syncing) {
-            let getPW = await browser.storage.local.get("pinned_websites");
-            browser.storage.sync.set({"pinned_websites": getPW.pinned_websites});
-            let getCMI = await browser.storage.local.get("context_menu_item");
-            browser.storage.sync.set({"context_menu_item": getCMI.context_menu_item});
+            let getSynced = await browser.storage.sync.get("synced");
+            if (getSynced.synced == null || !getSynced.synced) {
+                let getPW = await browser.storage.local.get("pinned_websites");
+                browser.storage.sync.set({"pinned_websites": getPW.pinned_websites});
+                let getCMI = await browser.storage.local.get("context_menu_item");
+                browser.storage.sync.set({"context_menu_item": getCMI.context_menu_item});
+                browser.storage.sync.set({"synced": true});
+            }
         } else {
             let getPW = await browser.storage.sync.get("pinned_websites");
             browser.storage.local.set({"pinned_websites": getPW.pinned_websites});
