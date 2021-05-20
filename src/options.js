@@ -250,6 +250,13 @@ function init() {
     i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
     document.getElementById("contextMenuSlider").addEventListener("change", contextMenuSlider);
     i18n(document.getElementById("contextMenuSliderLabel"), "contextMenuSlider");
+
+    browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message === "refresh") {
+            let gettingWebsites = browser.storage.local.get("pinned_websites");
+            gettingWebsites.then(finishLoading, onError);
+        }
+    });
 }
 
 function finishLoading(item) {

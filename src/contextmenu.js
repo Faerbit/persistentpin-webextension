@@ -4,6 +4,10 @@ const menuItemParams = {
     contexts: ["tab"]
 }
 
+function onError(error) {
+    console.log(`Error: ${error}`);
+}
+
 export function addMenuItem() {
     browser.contextMenus.create(menuItemParams, () => {
       if (browser.runtime.lastError) {
@@ -18,12 +22,14 @@ export function addMenuItem() {
             pinned: true
         });
         pinned_tabs.then((tabs) => {
-            pinned_websites = [];
-            tabs.forEach(function(element) {
+            let pinned_websites = [];
+            tabs.forEach((element) => {
                 pinned_websites.push(element.url);
             });
             let settingWebsites = browser.storage.local.set({"pinned_websites": pinned_websites});
             settingWebsites.then(null, onError);
+            let sending = browser.runtime.sendMessage("refresh");
+            sending.then(null, onError);
         });
     });
 }
