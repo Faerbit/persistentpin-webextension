@@ -31,6 +31,10 @@
         "message": "Füge \"Sammel' die aktuell angehefteten Tabs\" zum Tabkontextmenü hinzu",
         "description": "Label for slider which adds grab action to tab context menu"
     },
+    "syncSlider": {
+        "message": "Synchronisiere Einstellungen mit Firefox Sync (Opt-in auf jedem Gerät)",
+        "description": "Label for slider which controls add-on sync"
+    },
     "emptyRow": {
         "message": "Leer",
         "description": "Empty row, is shown when no entries are available"

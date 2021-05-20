@@ -1,4 +1,5 @@
 import { addMenuItem, removeMenuItem } from "./contextmenu.js";
+import { storage } from "./prefs.js";
 
 // global variables
 
@@ -6,8 +7,7 @@ var pinned_websites = null;
 var selection = null;
 
 function save() {
-    let settingWebsites =
-        browser.storage.local.set({"pinned_websites": pinned_websites});
+    let settingWebsites = storage.set_pinned_websites(pinned_websites);
     settingWebsites.then(null, onError);
 }
 
@@ -207,14 +207,25 @@ var context_menu_item = null;
 
 function contextMenuSlider(event) {
     if (this.checked) {
-        let settingContextMenu = browser.storage.local.set({"context_menu_item": true});
+        let settingContextMenu = storage.set_context_menu_item(true);
         settingContextMenu.then(null, onError);
         addMenuItem();
     }
     else {
-        let settingContextMenu = browser.storage.local.set({"context_menu_item": false});
+        let settingContextMenu = storage.set_context_menu_item(false);
         settingContextMenu.then(null, onError);
         removeMenuItem();
+    }
+}
+
+function syncSlider(event) {
+    if (this.checked) {
+        let settingSync = storage.set_syncing(true);
+        settingSync.then(null, onError);
+    }
+    else {
+        let settingSync = storage.set_syncing(false);
+        settingSync.then(null, onError);
     }
 }
 
@@ -229,11 +240,14 @@ function i18n(element, i18n_name) {
 }
 
 function init() {
-    let gettingWebsites = browser.storage.local.get("pinned_websites");
+    let gettingWebsites = storage.get_pinned_websites();
     gettingWebsites.then(finishLoading, onError);
 
-    let gettingContextMenu = browser.storage.local.get("context_menu_item");
+    let gettingContextMenu = storage.get_context_menu_item();
     gettingContextMenu.then(finishLoading2, onError);
+
+    let gettingSyncing = storage.get_syncing();
+    gettingSyncing.then(finishLoading3, onError);
 
     document.getElementById("btn-grab").addEventListener("click", grab);
     i18n(document.getElementById("btn-grab"), "grabButton");
@@ -250,10 +264,12 @@ function init() {
     i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
     document.getElementById("contextMenuSlider").addEventListener("change", contextMenuSlider);
     i18n(document.getElementById("contextMenuSliderLabel"), "contextMenuSlider");
+    document.getElementById("syncSlider").addEventListener("change", syncSlider);
+    i18n(document.getElementById("syncSliderLabel"), "syncSlider");
 
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message === "refresh") {
-            let gettingWebsites = browser.storage.local.get("pinned_websites");
+            let gettingWebsites = storage.get_pinned_websites();
             gettingWebsites.then(finishLoading, onError);
         }
     });
@@ -276,6 +292,11 @@ function finishLoading2(item) {
     else {
         document.getElementById("contextMenuSlider").checked = item.context_menu_item;
     }
+}
+
+function finishLoading3(item) {
+    console.log(item);
+    document.getElementById("syncSlider").checked = item;
 }
 
 

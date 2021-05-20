@@ -1,4 +1,5 @@
 import { addMenuItem } from "./contextmenu.js";
+import { storage } from "./prefs.js";
 
 // only open on the inital startup
 var opened_tabs = false;
@@ -32,8 +33,8 @@ function setupMenuItem(item) {
 
 
 if (opened_tabs == false) {
-    let getWebsites = browser.storage.local.get("pinned_websites");
+    let getWebsites = storage.get_pinned_websites();
     getWebsites.then(openTabs, onError);
-    let gettingContextMenu = browser.storage.local.get("context_menu_item");
+    let gettingContextMenu = storage.get_context_menu_item();
     gettingContextMenu.then(setupMenuItem, onError);
 }

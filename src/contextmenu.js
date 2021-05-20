@@ -1,3 +1,5 @@
+import { storage } from "./prefs.js";
+
 const menuItemParams = {
     id: "grab_current",
     title: browser.i18n.getMessage("grabButton"),
@@ -26,7 +28,7 @@ export function addMenuItem() {
             tabs.forEach((element) => {
                 pinned_websites.push(element.url);
             });
-            let settingWebsites = browser.storage.local.set({"pinned_websites": pinned_websites});
+            let settingWebsites = storage.set_pinned_websites(pinned_websites);
             settingWebsites.then(null, onError);
             let sending = browser.runtime.sendMessage("refresh");
             sending.then(null, onError);

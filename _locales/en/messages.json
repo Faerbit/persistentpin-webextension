@@ -31,6 +31,10 @@
         "message": "Add \"Grab currently pinned tabs\" to tab context menu",
         "description": "Label for slider which adds grab action to tab context menu"
     },
+    "syncSlider": {
+        "message": "Synchronize settings with Firefox Sync (opt-in on every device)",
+        "description": "Label for slider which controls add-on sync"
+    },
     "emptyRow": {
         "message": "Empty",
         "description": "Empty row, is shown when no entries are available"
