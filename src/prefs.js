@@ -49,6 +49,25 @@ class Storage {
         }
     }
 
+    async get_pin_in_all_windows() {
+        let syncing = await this.get_syncing();
+        if (syncing) {
+            return browser.storage.sync.get("pin_in_all_windows");
+        } else {
+            return browser.storage.local.get("pin_in_all_windows");
+        }
+    }
+
+    async set_pin_in_all_windows(pin) {
+        let syncing = await this.get_syncing();
+
+        if (syncing) {
+            return browser.storage.sync.set({"pin_in_all_windows": !!pin});
+        } else {
+            return browser.storage.local.set({"pin_in_all_windows": !!pin});
+        }
+    }
+
     async get_context_menu_item() {
         let syncing = await this.get_syncing();
         if (syncing) {

@@ -31,6 +31,10 @@
         "message": "Add \"Grab currently pinned tabs\" to tab context menu",
         "description": "Label for slider which adds grab action to tab context menu"
     },
+    "pinInAllWindowsSlider": {
+        "message": "Pin the websites in all opened windows",
+        "description": "Label for slider which adds functionality to pin tabs in every window"
+    },
     "syncSlider": {
         "message": "Synchronize settings with Firefox Sync (opt-in on every device)",
         "description": "Label for slider which controls add-on sync"
