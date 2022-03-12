@@ -31,6 +31,10 @@
         "message": "Füge \"Sammel' die aktuell angehefteten Tabs\" zum Tabkontextmenü hinzu",
         "description": "Label for slider which adds grab action to tab context menu"
     },
+    "pinInAllWindowsSlider": {
+        "message": "Hefte die Tabs in allen Fenstern an",
+        "description": "Label for slider which adds functionality to pin tabs in every window"
+    },
     "syncSlider": {
         "message": "Synchronisiere Einstellungen mit Firefox Sync (Opt-in auf jedem Gerät)",
         "description": "Label for slider which controls add-on sync"

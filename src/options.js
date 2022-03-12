@@ -229,6 +229,11 @@ function syncSlider(event) {
     }
 }
 
+function pinInAllWindowsSlider() {
+    let settingPinInAllWindowsSlider = storage.set_pin_in_all_windows(!!this.checked);
+    settingPinInAllWindowsSlider.then(null, onError);
+}
+
 function onError(error) {
     console.log(`Error: ${error}`);
 }
@@ -245,6 +250,9 @@ function load() {
 
     let gettingContextMenu = storage.get_context_menu_item();
     gettingContextMenu.then(finishLoading2, onError);
+
+    let gettingPinInAllWindows = storage.get_pin_in_all_windows();
+    gettingPinInAllWindows.then(finishLoading4, onError);
 }
 
 function init() {
@@ -270,6 +278,8 @@ function init() {
     i18n(document.getElementById("contextMenuSliderLabel"), "contextMenuSlider");
     document.getElementById("syncSlider").addEventListener("change", syncSlider);
     i18n(document.getElementById("syncSliderLabel"), "syncSlider");
+    document.getElementById("pinInAllWindowsSlider").addEventListener("change", pinInAllWindowsSlider);
+    i18n(document.getElementById("pinInAllWindowsSliderLabel"), "pinInAllWindowsSlider");
 
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message === "refresh") {
@@ -299,6 +309,10 @@ function finishLoading2(item) {
 
 function finishLoading3(item) {
     document.getElementById("syncSlider").checked = item;
+}
+
+function finishLoading4(item) {
+    document.getElementById("pinInAllWindowsSlider").checked = !!item.pin_in_all_windows;
 }
 
 
