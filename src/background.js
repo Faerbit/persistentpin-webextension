@@ -46,11 +46,12 @@ function openTabs(item, openInAll, newWindow) {
             }
         }).then(windowIds => {
             windowIds.forEach(windowId => {
-                pinned_websites.forEach(function(website) {
+                pinned_websites.forEach(function(tab) {
                     browser.tabs.create({
                         active: false,
                         pinned: true,
-                        url: website,
+                        url: tab.url,
+                        cookieStoreId: tab.cookieStoreId,
                         windowId,
                     });
                 });

@@ -21,7 +21,7 @@ function select(event) {
     targetEle.parentNode.className = "selected";
 }
 
-function renderTable(newSelection) {
+async function renderTable(newSelection) {
     if (newSelection != null) {
         selection = null;
     }
@@ -33,7 +33,19 @@ function renderTable(newSelection) {
         tr.addEventListener("click", select);
         var td = document.createElement("td");
         tr.appendChild(td);
-        td.innerText = pinned_websites[i];
+        var text = pinned_websites[i].url;
+        try {
+            let container = await browser.contextualIdentities.get(pinned_websites[i].cookieStoreId);
+            if (container.name) {
+                text += " <span style=\"color:" + container.colorCode + "\">(" + container.name + ")</span>";
+            }
+        } catch (error) {
+            if (error != "Error: Invalid contextual identity: firefox-default") {
+                console.log(error);
+            }
+        }
+
+        td.innerHTML = text;
         td.id = i;
         if (newSelection != null && newSelection == i
             || selection != null && parseInt(selection.id) == i) {
@@ -107,7 +119,7 @@ function grab(event) {
     pinned_tabs.then(function(tabs) {
         pinned_websites = [];
         tabs.forEach(function(element) {
-            pinned_websites.push(element.url);
+            pinned_websites.push({url: element.url, cookieStoreId: element.cookieStoreId});
         });
         save();
         selection = null;
@@ -129,7 +141,7 @@ function edit(event) {
         if (event.keyCode == 13) {
             var index = parseInt(selection.id);
             if (editField.value != "") {
-                pinned_websites[index] = editField.value;
+                pinned_websites[index] =  {url: editField.value, cookieStoreId: null};
                 save();
                 renderTable(selection.id);
             }
@@ -179,13 +191,13 @@ function add(event) {
         if (event.keyCode == 13) {
             if (editField.value != "") {
                 if (selection == null) {
-                    pinned_websites.push(editField.value);
+                    pinned_websites.push({url: editField.value, cookieStoreId: null});
                     save();
                     renderTable(pinned_websites.length - 1);
                 }
                 else {
                     pinned_websites.splice(parseInt(selection.id) + 1, 0,
-                        editField.value);
+                        {url: editField.value, cookieStoreId: null});
                     save();
                     renderTable(parseInt(selection.id) + 1);
                 }

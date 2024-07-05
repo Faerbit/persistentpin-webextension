@@ -17,7 +17,9 @@
   "permissions": [
     "storage",
     "tabs",
-    "contextMenus"
+    "contextMenus",
+    "contextualIdentities",
+    "cookies"
   ],
 
   "default_locale": "en",
