@@ -55,8 +55,8 @@ function openTabs(item, openInAll, newWindow) {
                     }).then((tab) => {
                         browser.tabs.update(tab.id, { pinned: true });
                     });
-                })
-            })
+                });
+            });
         });
     });
 
