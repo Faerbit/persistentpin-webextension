@@ -49,11 +49,13 @@ function openTabs(item, openInAll, newWindow) {
                 pinned_websites.forEach(function(website) {
                     browser.tabs.create({
                         active: false,
-                        pinned: true,
+                        pinned: false,
                         url: website,
                         windowId,
+                    }).then((tab) => {
+                        browser.tabs.update(tab.id, { pinned: true });
                     });
-                });
+                })
             })
         });
     });
