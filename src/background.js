@@ -66,7 +66,7 @@ function setupMenuItem(item) {
     }
 }
 
-function executeTabOpening(newWindow) {
+export function executeTabOpening(newWindow) {
     let getWebsites = storage.get_pinned_websites();
     let inAllWindows = storage.get_pin_in_all_windows().then(item => !!item.pin_in_all_windows);
     getWebsites.then((item) => {

@@ -7,6 +7,10 @@
         "message": "Sammel' die aktuell angehefteten Tabs",
         "description": "Grab button caption"
     },
+    "openButton": {
+        "message": "Permanente Tabs erneut öffnen",
+        "description": "Reopen button caption"
+    },
     "addButton": {
         "message": "Hinzufügen",
         "description": "Add button caption"

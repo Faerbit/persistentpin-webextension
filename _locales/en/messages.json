@@ -6,6 +6,10 @@
     "grabButton": {
         "message": "Grab currently pinned tabs",
         "description": "Grab button caption"
+    },    
+    "openButton": {
+        "message": "Reopen persistent pins",
+        "description": "Reopen button caption"
     },
     "addButton": {
         "message": "Add",
