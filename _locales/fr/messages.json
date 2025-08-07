@@ -1,0 +1,50 @@
+{
+    "extensionDescription": {
+        "message": "Conserve les sites webs épinglés après un redémarrage.",
+        "description": "Description de l'extension"
+    },
+    "grabButton": {
+        "message": "Prendre les onglets épinglés actuellement",
+        "description": "Légende du bouton prendre"
+    },
+    "addButton": {
+        "message": "Ajouter",
+        "description": "Légende du bouton ajouter"
+    },
+    "editButton": {
+        "message": "Éditer",
+        "description": "Légende du bouton éditer"
+    },
+    "upButton": {
+        "message": "Haut",
+        "description": "Légende du bouton haut"
+    },
+    "downButton": {
+        "message": "Bas",
+        "description": "Légende du bouton bas"
+    },
+    "deleteButton": {
+        "message": "Supprimer",
+        "description": "Légende du bouton supprimer"
+    },
+    "contextMenuSlider": {
+        "message": "Ajouter \"Prendre les onglets épinglés actuellement\" au menu contextuel des onglets",
+        "description": "Légende de l'interrupteur pour ajouter l'action de prendre les onglets au menu contextuel"
+    },
+    "pinInAllWindowsSlider": {
+        "message": "Épingler les sites webs dans toutes les fenêtres",
+        "description": "Légende de l'interrupteur pour épingler les sites webs dans toutes les fenêtres"
+    },
+    "syncSlider": {
+        "message": "Synchroniser les paramètres dans Firefox Sync (à activer sur chaque appareil)",
+        "description": "Légende de l'interrupteur pour la synchronisation"
+    },
+    "emptyRow": {
+        "message": "Vide",
+        "description": "Ligne vide, affichée quand aucune entrée n'est disponible"
+    },
+    "websitesTableHeader": {
+        "message": "Sites webs",
+        "description": "En-tête du tableau des sites webs"
+    }
+}
