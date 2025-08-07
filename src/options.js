@@ -1,3 +1,4 @@
+import { executeTabOpening } from "./background.js";
 import { addMenuItem, removeMenuItem } from "./contextmenu.js";
 import { storage } from "./prefs.js";
 
@@ -229,6 +230,10 @@ function syncSlider(event) {
     }
 }
 
+function open(event) {
+    executeTabOpening();
+}
+
 function pinInAllWindowsSlider() {
     let settingPinInAllWindowsSlider = storage.set_pin_in_all_windows(!!this.checked);
     settingPinInAllWindowsSlider.then(null, onError);
@@ -263,6 +268,8 @@ function init() {
 
     document.getElementById("btn-grab").addEventListener("click", grab);
     i18n(document.getElementById("btn-grab"), "grabButton");
+    document.getElementById("btn-open").addEventListener("click", open);
+    i18n(document.getElementById("btn-open"), "openButton");
     document.getElementById("btn-add").addEventListener("click", add);
     i18n(document.getElementById("btn-add"), "addButton");
     document.getElementById("btn-edit").addEventListener("click", edit);
