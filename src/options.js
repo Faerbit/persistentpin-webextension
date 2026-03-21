@@ -1,4 +1,4 @@
-import {setupMenuItems, removeMenuItems} from "./contextmenu.js";
+import {setupMenuItems} from "./contextmenu.js";
 import {storage} from "./prefs.js";
 import {onError} from "./common.js";
 
@@ -6,11 +6,6 @@ import {onError} from "./common.js";
 
 let pinned_websites = null;
 let selection = null;
-
-function save() {
-    let settingWebsites = storage.set_pinned_websites(pinned_websites);
-    settingWebsites.then(null, onError);
-}
 
 function select(event) {
     Array.from(document.getElementsByClassName("selected"))
@@ -70,7 +65,7 @@ function up(_event) {
         const tmp = pinned_websites[index - 1];
         pinned_websites[index - 1] = pinned_websites[index];
         pinned_websites[index] = tmp;
-        save();
+        storage.set_pinned_websites(pinned_websites).then(null, onError);
         selection.id = parseInt(selection.id) - 1;
     }
     renderTable();
@@ -88,7 +83,7 @@ function down(_event) {
         const tmp = pinned_websites[index + 1];
         pinned_websites[index + 1] = pinned_websites[index];
         pinned_websites[index] = tmp;
-        save();
+        storage.set_pinned_websites(pinned_websites).then(null, onError);
         selection.id = parseInt(selection.id) + 1;
     }
     renderTable();
@@ -100,7 +95,7 @@ function _delete(_event) {
     }
     const index = parseInt(selection.id);
     pinned_websites.splice(index, 1);
-    save();
+    storage.set_pinned_websites(pinned_websites).then(null, onError);
     selection = null;
     renderTable();
 }
@@ -114,7 +109,7 @@ function grab(_event) {
         tabs.forEach(function(element) {
             pinned_websites.push(element.url);
         });
-        save();
+        storage.set_pinned_websites(pinned_websites).then(null, onError);
         selection = null;
         renderTable();
     });
@@ -134,12 +129,12 @@ function edit(_event) {
             const index = parseInt(selection.id);
             if (editField.value !== "") {
                 pinned_websites[index] = editField.value;
-                save();
+                storage.set_pinned_websites(pinned_websites).then(null, onError);
                 renderTable(selection.id);
             }
             else {
                 pinned_websites.splice(index, 1);
-                save();
+                storage.set_pinned_websites(pinned_websites).then(null, onError);
                 selection = null;
                 renderTable();
             }
@@ -184,13 +179,13 @@ function add(_event) {
             if (editField.value !== "") {
                 if (selection == null) {
                     pinned_websites.push(editField.value);
-                    save();
+                    storage.set_pinned_websites(pinned_websites).then(null, onError);
                     renderTable(pinned_websites.length - 1);
                 }
                 else {
                     pinned_websites.splice(targetIndex, 0,
                         editField.value);
-                    save();
+                    storage.set_pinned_websites(pinned_websites).then(null, onError);
                     renderTable(targetIndex);
                 }
             }
@@ -206,46 +201,22 @@ function add(_event) {
     editField.focus();
 }
 
-function grabContextMenuSlider(_event) {
-    if (this.checked) {
-        let settingContextMenu = storage.set_grab_context_menu_item(true);
-        settingContextMenu.then(null, onError);
-        setupMenuItems();
-    }
-    else {
-        let settingContextMenu = storage.set_grab_context_menu_item(false);
-        settingContextMenu.then(null, onError);
-        removeMenuItems();
-    }
+async function grabContextMenuSlider(_event) {
+    await storage.set_grab_context_menu_item(!!this.checked)
+    await setupMenuItems();
 }
 
-function reopenContextMenuSlider(_event) {
-    if (this.checked) {
-        let settingContextMenu = storage.set_reopen_context_menu_item(true);
-        settingContextMenu.then(null, onError);
-        setupMenuItems();
-    }
-    else {
-        let settingContextMenu = storage.set_reopen_context_menu_item(false);
-        settingContextMenu.then(null, onError);
-        removeMenuItems();
-    }
+async function reopenContextMenuSlider(_event) {
+    await storage.set_reopen_context_menu_item(!!this.checked);
+    await setupMenuItems();
 }
 
-function syncSlider(_event) {
-    if (this.checked) {
-        let settingSync = storage.set_syncing(true);
-        settingSync.then(load, onError);
-    }
-    else {
-        let settingSync = storage.set_syncing(false);
-        settingSync.then(load, onError);
-    }
+async function syncSlider(_event) {
+    await storage.set_syncing(!!this.checked);
 }
 
-function pinInAllWindowsSlider() {
-    let settingPinInAllWindowsSlider = storage.set_pin_in_all_windows(!!this.checked);
-    settingPinInAllWindowsSlider.then(null, onError);
+async function pinInAllWindowsSlider() {
+    await storage.set_pin_in_all_windows(!!this.checked);
 }
 
 function i18n(element, i18n_name) {
@@ -254,35 +225,21 @@ function i18n(element, i18n_name) {
         browser.i18n.getMessage(i18n_name));
 }
 
-function load() {
-    let gettingWebsites = storage.get_pinned_websites();
-    gettingWebsites.then(finishLoading, onError);
+async function load() {
+    pinned_websites = await storage.get_pinned_websites();
+    renderTable();
 
-    const grab_context_menu = storage.get_grab_context_menu_item()
-    if (grab_context_menu == null) {
-        document.getElementById("grabContextMenuSlider").checked = false;
-    }
-    else {
-        document.getElementById("grabContextMenuSlider").checked = grab_context_menu;
-    }
+    document.getElementById("grabContextMenuSlider").checked = await storage.get_grab_context_menu_item()
 
-    const reopen_context_menu = storage.get_reopen_context_menu_item();
-    if (reopen_context_menu == null) {
-        document.getElementById("reopenContextMenuSlider").checked = false;
-    }
-    else {
-        document.getElementById("reopenContextMenuSlider").checked = reopen_context_menu;
-    }
+    document.getElementById("reopenContextMenuSlider").checked = await storage.get_reopen_context_menu_item();
 
-    let gettingPinInAllWindows = storage.get_pin_in_all_windows();
-    gettingPinInAllWindows.then(finishLoading4, onError);
+    document.getElementById("pinInAllWindowsSlider").checked = await storage.get_pin_in_all_windows();
+
+    document.getElementById("syncSlider").checked = await storage.get_syncing();
 }
 
-function init() {
-    load();
-
-    let gettingSyncing = storage.get_syncing();
-    gettingSyncing.then(finishLoading3, onError);
+async function init() {
+    await load();
 
     document.getElementById("btn-grab").addEventListener("click", grab);
     i18n(document.getElementById("btn-grab"), "grabButton");
@@ -312,24 +269,5 @@ function init() {
         }
     });
 }
-
-function finishLoading(item) {
-    if (item.pinned_websites == null) {
-        pinned_websites = []
-    }
-    else {
-        pinned_websites = item.pinned_websites
-    }
-    renderTable();
-}
-
-function finishLoading3(item) {
-    document.getElementById("syncSlider").checked = item;
-}
-
-function finishLoading4(item) {
-    document.getElementById("pinInAllWindowsSlider").checked = !!item.pin_in_all_windows;
-}
-
 
 document.addEventListener("DOMContentLoaded", init);
