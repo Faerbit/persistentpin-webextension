@@ -1,0 +1,50 @@
+{
+    "extensionDescription": {
+        "message": "Genskaber pinned tabs efter selv efter slet af browser historie og browser genstarts",
+        "description": "Description of the extension"
+    },
+    "grabButton": {
+        "message": "Sæt list til åbne pinned tabs",
+        "description": "Grab button caption"
+    },
+    "addButton": {
+        "message": "Tilføj",
+        "description": "Add button caption"
+    },
+    "editButton": {
+        "message": "Rediger",
+        "description": "Edit button caption"
+    },
+    "upButton": {
+        "message": "Op",
+        "description": "Up button caption"
+    },
+    "downButton": {
+        "message": "Ned",
+        "description": "Down button caption"
+    },
+    "deleteButton": {
+        "message": "Slet",
+        "description": "Delete button caption"
+    },
+    "contextMenuSlider": {
+        "message": "Tilføj \"Sæt list til åbne pinned tabs\" til tab højre-kliks menu",
+        "description": "Label for slider which adds grab action to tab context menu"
+    },
+    "pinInAllWindowsSlider": {
+        "message": "Pin websiderne til alle åbne vinduer",
+        "description": "Label for slider which adds functionality to pin tabs in every window"
+    },
+    "syncSlider": {
+        "message": "Synkroniser indstillinger med Firefox Sync (skal indstilles pr profil/installation)",
+        "description": "Label for slider which controls add-on sync"
+    },
+    "emptyRow": {
+        "message": "Tøm",
+        "description": "Empty row, is shown when no entries are available"
+    },
+    "websitesTableHeader": {
+        "message": "Websider",
+        "description": "Websites table header"
+    }
+}
