@@ -16,9 +16,13 @@ function select(event) {
         .forEach(function(element) {
             element.className = "";
         });
-    var targetEle = event.target;
-    selection = targetEle;
-    targetEle.parentNode.className = "selected";
+
+    // currentTarget makes sure to target the element the listener has been defined to. Here, you're sure to target the TR element
+    var targetEle = event.currentTarget;
+
+    // So your selection is the TD inside the TR
+    selection = targetEle.querySelector('td');
+    targetEle.className = "selected";
 }
 
 function renderTable(newSelection) {
@@ -157,6 +161,7 @@ function add(event) {
         });
     var tbody = document.getElementById("tbl-websites");
     var tr = document.createElement("tr");
+    var targetIndex = null;
     if (selection == null) {
         if (pinned_websites.length == 0) {
             tbody.removeChild(tbody.firstChild);
@@ -166,6 +171,7 @@ function add(event) {
     else {
         selection.parentNode.parentNode.insertBefore(tr,
             selection.parentNode.nextSibling);
+        targetIndex = parseInt(selection.id) + 1
     }
     tr.addEventListener("click", select);
     tr.className = "selected";
@@ -184,10 +190,10 @@ function add(event) {
                     renderTable(pinned_websites.length - 1);
                 }
                 else {
-                    pinned_websites.splice(parseInt(selection.id) + 1, 0,
+                    pinned_websites.splice(targetIndex, 0,
                         editField.value);
                     save();
-                    renderTable(parseInt(selection.id) + 1);
+                    renderTable(targetIndex);
                 }
             }
             else {
