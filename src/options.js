@@ -130,8 +130,7 @@ function edit(_event) {
     editField.type = "text";
     editField.value = oldContent;
     editField.addEventListener("keyup", function(event) {
-        // enter key
-        if (event.keyCode == 13) {
+        if (event.key === "Enter") {
             const index = parseInt(selection.id);
             if (editField.value !== "") {
                 pinned_websites[index] = editField.value;
@@ -145,8 +144,7 @@ function edit(_event) {
                 renderTable();
             }
         }
-        // escape key
-        if (event.keyCode === 27) {
+        if (event.key === "Escape") {
             renderTable(selection.id);
         }
     });
@@ -182,8 +180,7 @@ function add(event) {
     editField.className = "edit";
     editField.type = "text";
     editField.addEventListener("keyup", function(event) {
-        // enter key
-        if (event.keyCode === 13) {
+        if (event.key === "Enter") {
             if (editField.value !== "") {
                 if (selection == null) {
                     pinned_websites.push(editField.value);
@@ -201,8 +198,7 @@ function add(event) {
                 renderTable(selection.id);
             }
         }
-        // escape key
-        if (event.keyCode === 27) {
+        if (event.key === "Escape") {
             renderTable();
         }
     });
