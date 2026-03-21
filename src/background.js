@@ -1,12 +1,9 @@
-import { addMenuItem } from "./contextmenu.js";
+import { setupMenuItems } from "./contextmenu.js";
 import { storage } from "./prefs.js";
+import {onError} from "./common.js";
 
 // Flag to mark whether the initialization had run
 let initialized = false;
-
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
 
 function openTabs(item, openInAll, newWindow) {
     // Set the flag in the beginning, we don't want to wait for promises to resolve for initialization
@@ -68,12 +65,6 @@ function openTabs(item, openInAll, newWindow) {
 
 }
 
-function setupMenuItem(item) {
-    if (item.context_menu_item != null && item.context_menu_item) {
-        addMenuItem();
-    }
-}
-
 export function executeTabOpening(newWindow) {
     let getWebsites = storage.get_pinned_websites();
     let inAllWindows = storage.get_pin_in_all_windows().then(item => !!item.pin_in_all_windows);
@@ -84,12 +75,11 @@ export function executeTabOpening(newWindow) {
             }
         });
     }, onError);
-    let gettingContextMenu = storage.get_context_menu_item();
-    gettingContextMenu.then(setupMenuItem, onError);
 }
 
 if (initialized === false) {
     executeTabOpening();
+    setupMenuItems();
 
     browser.windows.onCreated.addListener((newWindow) => {
         executeTabOpening(newWindow);

@@ -7,8 +7,8 @@
         "message": "Sammel' die aktuell angehefteten Tabs",
         "description": "Grab button caption"
     },
-    "openButton": {
-        "message": "Permanente Tabs erneut öffnen",
+    "reopenButton": {
+        "message": "Konfigurierte angeheftete Tabs erneut öffnen",
         "description": "Reopen button caption"
     },
     "addButton": {
@@ -34,6 +34,10 @@
     "contextMenuSlider": {
         "message": "Füge \"Sammel' die aktuell angehefteten Tabs\" zum Tabkontextmenü hinzu",
         "description": "Label for slider which adds grab action to tab context menu"
+    },
+    "reopenContextMenuSlider": {
+        "message": "Füge \"Konfigurierte angeheftete Tabs erneut öffnen\" zum Tabkontextmenü hinzu",
+        "description": "Label for slider which adds reopen action to tab context menu"
     },
     "pinInAllWindowsSlider": {
         "message": "Hefte die Tabs in allen Fenstern an",

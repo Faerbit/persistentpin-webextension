@@ -1,6 +1,6 @@
-import { executeTabOpening } from "./background.js";
-import { addMenuItem, removeMenuItem } from "./contextmenu.js";
-import { storage } from "./prefs.js";
+import {setupMenuItems, removeMenuItems} from "./contextmenu.js";
+import {storage} from "./prefs.js";
+import {onError} from "./common.js";
 
 // global variables
 
@@ -39,7 +39,7 @@ function renderTable(newSelection) {
         const td = document.createElement("td");
         tr.appendChild(td);
         td.innerText = pinned_websites[i];
-        td.id = i;
+        td.id = `${i}`;
         if (newSelection != null && newSelection === i
             || selection != null && parseInt(selection.id) === i) {
             selection = td;
@@ -145,7 +145,7 @@ function edit(_event) {
             }
         }
         if (event.key === "Escape") {
-            renderTable(selection.id);
+            renderTable(selection?.id );
         }
     });
     selection.textContent = "";
@@ -153,7 +153,7 @@ function edit(_event) {
     editField.focus();
 }
 
-function add(event) {
+function add(_event) {
     Array.from(document.getElementsByClassName("selected"))
         .forEach(function(element) {
             element.className = "";
@@ -206,22 +206,33 @@ function add(event) {
     editField.focus();
 }
 
-var context_menu_item = null;
-
-function contextMenuSlider(event) {
+function grabContextMenuSlider(_event) {
     if (this.checked) {
-        let settingContextMenu = storage.set_context_menu_item(true);
+        let settingContextMenu = storage.set_grab_context_menu_item(true);
         settingContextMenu.then(null, onError);
-        addMenuItem();
+        setupMenuItems();
     }
     else {
-        let settingContextMenu = storage.set_context_menu_item(false);
+        let settingContextMenu = storage.set_grab_context_menu_item(false);
         settingContextMenu.then(null, onError);
-        removeMenuItem();
+        removeMenuItems();
     }
 }
 
-function syncSlider(event) {
+function reopenContextMenuSlider(_event) {
+    if (this.checked) {
+        let settingContextMenu = storage.set_reopen_context_menu_item(true);
+        settingContextMenu.then(null, onError);
+        setupMenuItems();
+    }
+    else {
+        let settingContextMenu = storage.set_reopen_context_menu_item(false);
+        settingContextMenu.then(null, onError);
+        removeMenuItems();
+    }
+}
+
+function syncSlider(_event) {
     if (this.checked) {
         let settingSync = storage.set_syncing(true);
         settingSync.then(load, onError);
@@ -232,17 +243,9 @@ function syncSlider(event) {
     }
 }
 
-function open(event) {
-    executeTabOpening();
-}
-
 function pinInAllWindowsSlider() {
     let settingPinInAllWindowsSlider = storage.set_pin_in_all_windows(!!this.checked);
     settingPinInAllWindowsSlider.then(null, onError);
-}
-
-function onError(error) {
-    console.log(`Error: ${error}`);
 }
 
 function i18n(element, i18n_name) {
@@ -255,8 +258,21 @@ function load() {
     let gettingWebsites = storage.get_pinned_websites();
     gettingWebsites.then(finishLoading, onError);
 
-    let gettingContextMenu = storage.get_context_menu_item();
-    gettingContextMenu.then(finishLoading2, onError);
+    const grab_context_menu = storage.get_grab_context_menu_item()
+    if (grab_context_menu == null) {
+        document.getElementById("grabContextMenuSlider").checked = false;
+    }
+    else {
+        document.getElementById("grabContextMenuSlider").checked = grab_context_menu;
+    }
+
+    const reopen_context_menu = storage.get_reopen_context_menu_item();
+    if (reopen_context_menu == null) {
+        document.getElementById("reopenContextMenuSlider").checked = false;
+    }
+    else {
+        document.getElementById("reopenContextMenuSlider").checked = reopen_context_menu;
+    }
 
     let gettingPinInAllWindows = storage.get_pin_in_all_windows();
     gettingPinInAllWindows.then(finishLoading4, onError);
@@ -270,8 +286,6 @@ function init() {
 
     document.getElementById("btn-grab").addEventListener("click", grab);
     i18n(document.getElementById("btn-grab"), "grabButton");
-    document.getElementById("btn-open").addEventListener("click", open);
-    i18n(document.getElementById("btn-open"), "openButton");
     document.getElementById("btn-add").addEventListener("click", add);
     i18n(document.getElementById("btn-add"), "addButton");
     document.getElementById("btn-edit").addEventListener("click", edit);
@@ -283,14 +297,16 @@ function init() {
     document.getElementById("btn-delete").addEventListener("click", _delete);
     i18n(document.getElementById("btn-delete"), "deleteButton");
     i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
-    document.getElementById("contextMenuSlider").addEventListener("change", contextMenuSlider);
-    i18n(document.getElementById("contextMenuSliderLabel"), "contextMenuSlider");
+    document.getElementById("grabContextMenuSlider").addEventListener("change", grabContextMenuSlider);
+    i18n(document.getElementById("grabContextMenuSliderLabel"), "grabContextMenuSlider");
+    document.getElementById("reopenContextMenuSlider").addEventListener("change", reopenContextMenuSlider);
+    i18n(document.getElementById("reopenContextMenuSliderLabel"), "reopenContextMenuSlider");
     document.getElementById("syncSlider").addEventListener("change", syncSlider);
     i18n(document.getElementById("syncSliderLabel"), "syncSlider");
     document.getElementById("pinInAllWindowsSlider").addEventListener("change", pinInAllWindowsSlider);
     i18n(document.getElementById("pinInAllWindowsSliderLabel"), "pinInAllWindowsSlider");
 
-    browser.runtime.onMessage.addEventListener((message, _sender, _sendResponse) => {
+    browser.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
         if (message === "refresh") {
             load();
         }
@@ -307,15 +323,6 @@ function finishLoading(item) {
     renderTable();
 }
 
-function finishLoading2(item) {
-    if (item.context_menu_item == null) {
-        document.getElementById("contextMenuSlider").checked = false;
-    }
-    else {
-        document.getElementById("contextMenuSlider").checked = item.context_menu_item;
-    }
-}
-
 function finishLoading3(item) {
     document.getElementById("syncSlider").checked = item;
 }
@@ -325,4 +332,4 @@ function finishLoading4(item) {
 }
 
 
-document.addEventListener("DOMContentLoaded", init());
+document.addEventListener("DOMContentLoaded", init);

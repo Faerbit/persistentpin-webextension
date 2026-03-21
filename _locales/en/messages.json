@@ -7,7 +7,7 @@
         "message": "Grab currently pinned tabs",
         "description": "Grab button caption"
     },    
-    "openButton": {
+    "reopenButton": {
         "message": "Reopen persistent pins",
         "description": "Reopen button caption"
     },
@@ -31,9 +31,13 @@
         "message": "Delete",
         "description": "Delete button caption"
     },
-    "contextMenuSlider": {
+    "grabContextMenuSlider": {
         "message": "Add \"Grab currently pinned tabs\" to tab context menu",
         "description": "Label for slider which adds grab action to tab context menu"
+    },
+    "reopenContextMenuSlider": {
+        "message": "Add \"Reopen persistent pins\" to tab context menu",
+        "description": "Label for slider which adds reopen action to tab context menu"
     },
     "pinInAllWindowsSlider": {
         "message": "Pin the websites in all opened windows",

@@ -1,7 +1,3 @@
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
-
 class Storage {
     async get_syncing() {
         let syncing = await browser.storage.local.get("sync");
@@ -17,16 +13,16 @@ class Storage {
             let getSynced = await browser.storage.sync.get("synced");
             if (getSynced.synced == null || !getSynced.synced) {
                 let getPW = await browser.storage.local.get("pinned_websites");
-                browser.storage.sync.set({"pinned_websites": getPW.pinned_websites});
+                await browser.storage.sync.set({"pinned_websites": getPW.pinned_websites});
                 let getCMI = await browser.storage.local.get("context_menu_item");
-                browser.storage.sync.set({"context_menu_item": getCMI.context_menu_item});
-                browser.storage.sync.set({"synced": true});
+                await browser.storage.sync.set({"context_menu_item": getCMI.context_menu_item});
+                await browser.storage.sync.set({"synced": true});
             }
         } else {
             let getPW = await browser.storage.sync.get("pinned_websites");
-            browser.storage.local.set({"pinned_websites": getPW.pinned_websites});
+            await browser.storage.local.set({"pinned_websites": getPW.pinned_websites});
             let getCMI = await browser.storage.sync.get("context_menu_item");
-            browser.storage.local.set({"context_menu_item": getCMI.context_menu_item});
+            await browser.storage.local.set({"context_menu_item": getCMI.context_menu_item});
         }
         return browser.storage.local.set({"sync": syncing});
     }
@@ -68,21 +64,43 @@ class Storage {
         }
     }
 
-    async get_context_menu_item() {
+    async get_grab_context_menu_item() {
         let syncing = await this.get_syncing();
         if (syncing) {
-            return browser.storage.sync.get("context_menu_item");
+            const o = await browser.storage.sync.get("context_menu_item");
+            return o.context_menu_item;
         } else {
-            return browser.storage.local.get("context_menu_item");
+            const o = await browser.storage.local.get("context_menu_item");
+            return o.context_menu_item;
         }
     }
 
-    async set_context_menu_item(context_menu_item) {
+    async set_grab_context_menu_item(value) {
         let syncing = await this.get_syncing();
         if (syncing) {
-            return browser.storage.sync.set({"context_menu_item": context_menu_item});
+            return browser.storage.sync.set({"context_menu_item": value});
         } else {
-            return browser.storage.local.set({"context_menu_item": context_menu_item});
+            return browser.storage.local.set({"context_menu_item": value});
+        }
+    }
+
+    async get_reopen_context_menu_item() {
+        let syncing = await this.get_syncing();
+        if (syncing) {
+            const o = await browser.storage.sync.get("reopen_context_menu_item");
+            return o.reopen_context_menu_item
+        } else {
+            const o = await browser.storage.local.get("reopen_context_menu_item");
+            return o.reopen_context_menu_item
+        }
+    }
+
+    async set_reopen_context_menu_item(value) {
+        let syncing = await this.get_syncing();
+        if (syncing) {
+            return browser.storage.sync.set({"reopen_context_menu_item": value});
+        } else {
+            return browser.storage.local.set({"reopen_context_menu_item": value});
         }
     }
 }
