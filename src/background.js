@@ -2,7 +2,7 @@ import { addMenuItem } from "./contextmenu.js";
 import { storage } from "./prefs.js";
 
 // Flag to mark whether the initialization had run
-var initialized = false;
+let initialized = false;
 
 function onError(error) {
     console.log(`Error: ${error}`);
@@ -88,7 +88,7 @@ export function executeTabOpening(newWindow) {
     gettingContextMenu.then(setupMenuItem, onError);
 }
 
-if (initialized == false) {
+if (initialized === false) {
     executeTabOpening();
 
     browser.windows.onCreated.addListener((newWindow) => {

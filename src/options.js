@@ -4,8 +4,8 @@ import { storage } from "./prefs.js";
 
 // global variables
 
-var pinned_websites = null;
-var selection = null;
+let pinned_websites = null;
+let selection = null;
 
 function save() {
     let settingWebsites = storage.set_pinned_websites(pinned_websites);
@@ -19,7 +19,7 @@ function select(event) {
         });
 
     // currentTarget makes sure to target the element the listener has been defined to. Here, you're sure to target the TR element
-    var targetEle = event.currentTarget;
+    const targetEle = event.currentTarget;
 
     // So your selection is the TD inside the TR
     selection = targetEle.querySelector('td');
@@ -30,26 +30,26 @@ function renderTable(newSelection) {
     if (newSelection != null) {
         selection = null;
     }
-    var new_tbody = document.createElement("tbody");
+    const new_tbody = document.createElement("tbody");
     new_tbody.id = "tbl-websites";
-    var old_tbody = document.getElementById("tbl-websites");
-    for (var i = 0; i<pinned_websites.length; i++) {
-        var tr = document.createElement("tr");
+    const old_tbody = document.getElementById("tbl-websites");
+    for (let i = 0; i<pinned_websites.length; i++) {
+        const tr = document.createElement("tr");
         tr.addEventListener("click", select);
-        var td = document.createElement("td");
+        const td = document.createElement("td");
         tr.appendChild(td);
         td.innerText = pinned_websites[i];
         td.id = i;
-        if (newSelection != null && newSelection == i
-            || selection != null && parseInt(selection.id) == i) {
+        if (newSelection != null && newSelection === i
+            || selection != null && parseInt(selection.id) === i) {
             selection = td;
             tr.className = "selected";
         }
         new_tbody.appendChild(tr);
     }
-    if (pinned_websites.length == 0) {
-        var tr = document.createElement("tr");
-        var td = document.createElement("td");
+    if (pinned_websites.length === 0) {
+        let tr = document.createElement("tr");
+        let td = document.createElement("td");
         tr.appendChild(td);
         td.innerText = browser.i18n.getMessage("emptyRow");
         td.className = "empty";
@@ -58,16 +58,16 @@ function renderTable(newSelection) {
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
 }
 
-function up(event) {
+function up(_event) {
     if (selection == null) {
         return;
     }
-    var index = parseInt(selection.id);
-    if (index == 0) {
+    const index = parseInt(selection.id);
+    if (index === 0) {
         return;
     }
     else {
-        var tmp = pinned_websites[index - 1];
+        const tmp = pinned_websites[index - 1];
         pinned_websites[index - 1] = pinned_websites[index];
         pinned_websites[index] = tmp;
         save();
@@ -76,16 +76,16 @@ function up(event) {
     renderTable();
 }
 
-function down(event) {
+function down(_event) {
     if (selection == null) {
         return;
     }
-    var index = parseInt(selection.id);
-    if (index == pinned_websites.length - 1) {
+    const index = parseInt(selection.id);
+    if (index === pinned_websites.length - 1) {
         return;
     }
     else {
-        var tmp = pinned_websites[index + 1];
+        const tmp = pinned_websites[index + 1];
         pinned_websites[index + 1] = pinned_websites[index];
         pinned_websites[index] = tmp;
         save();
@@ -94,19 +94,19 @@ function down(event) {
     renderTable();
 }
 
-function _delete(event) {
+function _delete(_event) {
     if (selection == null) {
         return;
     }
-    var index = parseInt(selection.id);
+    const index = parseInt(selection.id);
     pinned_websites.splice(index, 1);
     save();
     selection = null;
     renderTable();
 }
 
-function grab(event) {
-    var pinned_tabs = browser.tabs.query({
+function grab(_event) {
+    const pinned_tabs = browser.tabs.query({
         pinned: true
     });
     pinned_tabs.then(function(tabs) {
@@ -120,20 +120,20 @@ function grab(event) {
     });
 }
 
-function edit(event) {
+function edit(_event) {
     if (selection == null) {
         return;
     }
-    var oldContent = selection.textContent;
-    var editField = document.createElement("input");
+    const oldContent = selection.textContent;
+    const editField = document.createElement("input");
     editField.className = "edit";
     editField.type = "text";
     editField.value = oldContent;
     editField.addEventListener("keyup", function(event) {
         // enter key
         if (event.keyCode == 13) {
-            var index = parseInt(selection.id);
-            if (editField.value != "") {
+            const index = parseInt(selection.id);
+            if (editField.value !== "") {
                 pinned_websites[index] = editField.value;
                 save();
                 renderTable(selection.id);
@@ -146,7 +146,7 @@ function edit(event) {
             }
         }
         // escape key
-        if (event.keyCode == 27) {
+        if (event.keyCode === 27) {
             renderTable(selection.id);
         }
     });
@@ -160,11 +160,11 @@ function add(event) {
         .forEach(function(element) {
             element.className = "";
         });
-    var tbody = document.getElementById("tbl-websites");
-    var tr = document.createElement("tr");
-    var targetIndex = null;
+    const tbody = document.getElementById("tbl-websites");
+    const tr = document.createElement("tr");
+    let targetIndex = null;
     if (selection == null) {
-        if (pinned_websites.length == 0) {
+        if (pinned_websites.length === 0) {
             tbody.removeChild(tbody.firstChild);
         }
         tbody.appendChild(tr);
@@ -176,15 +176,15 @@ function add(event) {
     }
     tr.addEventListener("click", select);
     tr.className = "selected";
-    var td = document.createElement("td");
+    const td = document.createElement("td");
     tr.appendChild(td);
-    var editField = document.createElement("input");
+    const editField = document.createElement("input");
     editField.className = "edit";
     editField.type = "text";
     editField.addEventListener("keyup", function(event) {
         // enter key
-        if (event.keyCode == 13) {
-            if (editField.value != "") {
+        if (event.keyCode === 13) {
+            if (editField.value !== "") {
                 if (selection == null) {
                     pinned_websites.push(editField.value);
                     save();
@@ -202,7 +202,7 @@ function add(event) {
             }
         }
         // escape key
-        if (event.keyCode == 27) {
+        if (event.keyCode === 27) {
             renderTable();
         }
     });
@@ -294,7 +294,7 @@ function init() {
     document.getElementById("pinInAllWindowsSlider").addEventListener("change", pinInAllWindowsSlider);
     i18n(document.getElementById("pinInAllWindowsSliderLabel"), "pinInAllWindowsSlider");
 
-    browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    browser.runtime.onMessage.addEventListener((message, _sender, _sendResponse) => {
         if (message === "refresh") {
             load();
         }

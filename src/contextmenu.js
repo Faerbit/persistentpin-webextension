@@ -19,7 +19,7 @@ export function addMenuItem() {
       }
     });
 
-    browser.contextMenus.onClicked.addListener((info, tab) => {
+    browser.contextMenus.onClicked.addEventListener((info, tab) => {
         var pinned_tabs = browser.tabs.query({
             pinned: true
         });
