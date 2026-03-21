@@ -12,20 +12,28 @@ function openTabs(item, openInAll, newWindow) {
     // Set the flag in the beginning, we don't want to wait for promises to resolve for initialization
     initialized = true;
     let getExistingPinnedTabs = browser.tabs.query({ "pinned": true });
+    let pinned_websites = item.pinned_websites ?? [];
 
-    getExistingPinnedTabs.then(
-        (existingPinnedTabs) => {
-            let tabs = existingPinnedTabs;
-            if (newWindow && newWindow.id) {
-                // Filter out tabs only from the current window
-                tabs = tabs.filter(tab => tab.windowId === newWindow.id);
-            }
-            let pinIds = tabs.map( tab => tab.id );
-            return browser.tabs.remove(pinIds);
+    new Promise((resolve) => {
+        if (pinned_websites.length === 0) {
+            resolve();
+            return;
         }
-    ).then(() => {
-        let pinned_websites = item.pinned_websites;
 
+        getExistingPinnedTabs
+            .then((existingPinnedTabs) => {
+                let tabs = existingPinnedTabs;
+                if (newWindow && newWindow.id) {
+                    // Filter out tabs only from the current window
+                    tabs = tabs.filter((tab) => tab.windowId === newWindow.id);
+                }
+                let pinIds = tabs.map((tab) => tab.id);
+                return browser.tabs.remove(pinIds);
+            })
+            .then(() => {
+                resolve();
+            });
+    }).then(() => {
         // Resolve windowIds that will be targeted by new pins
         new Promise((resolve) => {
             if (typeof newWindow !== 'undefined') {
