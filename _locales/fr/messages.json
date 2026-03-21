@@ -7,6 +7,10 @@
         "message": "Prendre les onglets épinglés actuellement",
         "description": "Légende du bouton prendre"
     },
+    "openButton": {
+        "message": "Réouvrir les onglets persistents",
+        "description": "Légende du bouton ouvrir"
+    },
     "addButton": {
         "message": "Ajouter",
         "description": "Légende du bouton ajouter"
