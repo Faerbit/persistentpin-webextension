@@ -1,4 +1,4 @@
-all: dev
+all: build
 
 prepare:
 	mkdir -p out
@@ -13,12 +13,8 @@ package: clean prepare
 	cp font-awesome-4.7.0/css/font-awesome.min.css build/font-awesome-4.7.0/css/
 	cp -r font-awesome-4.7.0/fonts build/font-awesome-4.7.0/
 
-dev: package
+build: package
 	web-ext build --source-dir build --artifacts-dir out
-
-release: clean package
-	web-ext build --source-dir build --artifacts-dir out
-	git checkout manifest.json
 
 clean:
 	rm -rf out
