@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
     <meta charset="utf-8"/>
     <head>
         <link rel="stylesheet" href="options.css" type="text/css">
@@ -8,12 +8,13 @@
     <body>
         <div class="btns">
             <button class="large" id="btn-grab">
-                <i class="fa fa-hand-rock-o"></i> __MSG_grabButton__
+                <i class="fa fa-hand-rock-o"></i>
+                <span data-i18n="grabButton"></span>
             </button>
         </div>
         <table>
             <thead>
-            <tr><th>__MSG_websitesTableHeader__</th></tr>
+            <tr><th data-i18n="websitesTableHeader"></th></tr>
             </thead>
             <tbody id="tbl-websites">
                 <tr><td class="empty">Empty</td></tr>
@@ -21,44 +22,49 @@
         </table>
         <div class="btns">
             <button id="btn-add">
-                <i class="fa fa-plus"></i> __MSG_addButton__
+                <i class="fa fa-plus"></i>
+                <span data-i18n="addButton"></span>
             </button>
             <button id="btn-edit">
-                <i class="fa fa-pencil"></i> __MSG_editButton__
+                <i class="fa fa-pencil"></i>
+                <span data-i18n="editButton"></span>
             </button>
             <button id="btn-up">
-                <i class="fa fa-arrow-up"></i> __MSG_upButton__
+                <i class="fa fa-arrow-up"></i>
+                <span data-i18n="upButton"></span>
             </button>
             <button id="btn-down">
-                <i class="fa fa-arrow-down"></i> __MSG_downButton__
+                <i class="fa fa-arrow-down"></i>
+                <span data-i18n="downButton"></span>
             </button>
             <button id="btn-delete">
-                <i class="fa fa-trash-o"></i> __MSG_deleteButton__
+                <i class="fa fa-trash-o"></i>
+                <span data-i18n="deleteButton"></span>
             </button>
         </div>
         <div class="btns">
-              <span class="switch-label" id="grabContextMenuSliderLabel">__MSG_grabContextMenuSlider__</span>
+              <span class="switch-label" id="grabContextMenuSliderLabel" data-i18n="grabContextMenuSlider"></span>
               <label class="switch">
                   <input type="checkbox" id="grabContextMenuSlider">
                   <span class="slider"></span>
               </label>
         </div>
         <div class="btns">
-            <span class="switch-label" id="reopenContextMenuSliderLabel">__MSG_reopenContextMenuSlider__</span>
+            <span class="switch-label" id="reopenContextMenuSliderLabel" data-i18n="reopenContextMenuSlider"></span>
             <label class="switch">
                 <input type="checkbox" id="reopenContextMenuSlider">
                 <span class="slider"></span>
             </label>
         </div>
         <div class="btns">
-              <span class="switch-label" id="pinInAllWindowsSliderLabel">__MSG_pinInAllWindowsSlider__</span>
+              <span class="switch-label" id="pinInAllWindowsSliderLabel" data-i18n="pinInAllWindowsSlider"></span>
               <label class="switch">
                   <input type="checkbox" id="pinInAllWindowsSlider">
                   <span class="slider"></span>
               </label>
         </div>
         <div class="btns">
-              <span class="switch-label" id="syncSliderLabel">__MSG_syncSlider__</span>
+              <span class="switch-label" id="syncSliderLabel" data-i18n="syncSlider"></span>
               <label class="switch">
                   <input type="checkbox" id="syncSlider">
                   <span class="slider"></span>

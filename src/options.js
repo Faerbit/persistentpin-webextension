@@ -89,7 +89,7 @@ function down(_event) {
     renderTable();
 }
 
-function _delete(_event) {
+function delete_(_event) {
     if (selection == null) {
         return;
     }
@@ -219,12 +219,6 @@ async function pinInAllWindowsSlider() {
     await storage.set_pin_in_all_windows(!!this.checked);
 }
 
-function i18n(element, i18n_name) {
-    element.innerHTML = element.innerHTML.replace(
-        "__MSG_" + i18n_name + "__",
-        browser.i18n.getMessage(i18n_name));
-}
-
 async function load() {
     pinned_websites = await storage.get_pinned_websites();
     renderTable();
@@ -238,30 +232,35 @@ async function load() {
     document.getElementById("syncSlider").checked = await storage.get_syncing();
 }
 
-async function init() {
-    await load();
+function i18n() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const messageKey = element.getAttribute('data-i18n');
+        const localizedString = browser.i18n.getMessage(messageKey);
 
+        if (localizedString) {
+            element.textContent = localizedString;
+        }
+        else {
+            element.textContent = "!!! NO MESSAGE EXISTS !!!";
+        }
+    });
+}
+
+async function init() {
     document.getElementById("btn-grab").addEventListener("click", grab);
-    i18n(document.getElementById("btn-grab"), "grabButton");
     document.getElementById("btn-add").addEventListener("click", add);
-    i18n(document.getElementById("btn-add"), "addButton");
     document.getElementById("btn-edit").addEventListener("click", edit);
-    i18n(document.getElementById("btn-edit"), "editButton");
     document.getElementById("btn-up").addEventListener("click", up);
-    i18n(document.getElementById("btn-up"), "upButton");
     document.getElementById("btn-down").addEventListener("click", down);
-    i18n(document.getElementById("btn-down"), "downButton");
-    document.getElementById("btn-delete").addEventListener("click", _delete);
-    i18n(document.getElementById("btn-delete"), "deleteButton");
-    i18n(document.getElementsByTagName("th")[0], "websitesTableHeader");
+    document.getElementById("btn-delete").addEventListener("click", delete_);
     document.getElementById("grabContextMenuSlider").addEventListener("change", grabContextMenuSlider);
-    i18n(document.getElementById("grabContextMenuSliderLabel"), "grabContextMenuSlider");
     document.getElementById("reopenContextMenuSlider").addEventListener("change", reopenContextMenuSlider);
-    i18n(document.getElementById("reopenContextMenuSliderLabel"), "reopenContextMenuSlider");
     document.getElementById("syncSlider").addEventListener("change", syncSlider);
-    i18n(document.getElementById("syncSliderLabel"), "syncSlider");
     document.getElementById("pinInAllWindowsSlider").addEventListener("change", pinInAllWindowsSlider);
-    i18n(document.getElementById("pinInAllWindowsSliderLabel"), "pinInAllWindowsSlider");
+
+    i18n();
+
+    await load();
 
     browser.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
         if (message === "refresh") {
