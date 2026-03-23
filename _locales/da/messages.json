@@ -27,7 +27,7 @@
         "message": "Slet",
         "description": "Delete button caption"
     },
-    "contextMenuSlider": {
+    "grabContextMenuSlider": {
         "message": "Tilføj \"Sæt list til åbne pinned tabs\" til tab højre-kliks menu",
         "description": "Label for slider which adds grab action to tab context menu"
     },

@@ -31,9 +31,13 @@
         "message": "Supprimer",
         "description": "Légende du bouton supprimer"
     },
-    "contextMenuSlider": {
+    "grabContextMenuSlider": {
         "message": "Ajouter \"Prendre les onglets épinglés actuellement\" au menu contextuel des onglets",
         "description": "Légende de l'interrupteur pour ajouter l'action de prendre les onglets au menu contextuel"
+    },
+    "reopenContextMenuSlider": {
+        "message": "Ajouter \"Réouvrir les onglets persistents\" au menu contextuel des onglets",
+        "description": "Légende de l'interrupteur qui ajoute l'action de réouverture au menu contextuel des onglets"
     },
     "pinInAllWindowsSlider": {
         "message": "Épingler les sites webs dans toutes les fenêtres",
