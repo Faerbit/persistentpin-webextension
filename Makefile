@@ -16,11 +16,7 @@ package: clean prepare
 dev: package
 	web-ext build --source-dir build --artifacts-dir out
 
-modify-manifest:
-	git checkout manifest.json
-	python3 modify-manifest.py
-
-release: clean modify-manifest package
+release: clean package
 	web-ext build --source-dir build --artifacts-dir out
 	git checkout manifest.json
 
