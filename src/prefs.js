@@ -2,11 +2,11 @@ import {onError} from "./common.js";
 
 class Storage {
     async get_syncing() {
-        let syncing = await browser.storage.local.get("sync");
-        if (syncing.sync == null) {
+        let p = await browser.storage.local.get("sync");
+        if (!("sync" in p)) {
             return false;
         } else {
-            return syncing.sync;
+            return p.sync;
         }
     }
 
@@ -37,7 +37,7 @@ class Storage {
         } else {
             p = await browser.storage.local.get("pinned_websites");
         }
-        if (p == null) {
+        if (!("pinned_websites" in p)) {
             return [];
         } else {
             return p.pinned_websites;
@@ -61,7 +61,7 @@ class Storage {
         } else {
             p = await browser.storage.local.get("pin_in_all_windows");
         }
-        if (p == null) {
+        if (!("pin_in_all_windows" in p)) {
             return false;
         } else {
             return p.pin_in_all_windows;
@@ -86,7 +86,7 @@ class Storage {
         } else {
             p = await browser.storage.local.get("context_menu_item");
         }
-        if (p == null) {
+        if (!("context_menu_item" in p)) {
             return false;
         } else {
             return p.context_menu_item;
@@ -110,7 +110,7 @@ class Storage {
         } else {
             p = await browser.storage.local.get("reopen_context_menu_item");
         }
-        if (p == null) {
+        if (!("reopen_context_menu_item" in p)) {
             return false;
         } else {
             return p.reopen_context_menu_item;
