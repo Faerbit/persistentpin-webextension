@@ -11,6 +11,10 @@
         "message": "Reopen persistent pins",
         "description": "Reopen button caption"
     },
+    "resetButton": {
+        "message": "Reset pinned tab to saved URL",
+        "description": "Reset button caption, shown on a pinned tab's context menu when its URL matches a saved entry"
+    },
     "addButton": {
         "message": "Add",
         "description": "Add button caption"
@@ -38,6 +42,10 @@
     "reopenContextMenuSlider": {
         "message": "Add \"Reopen persistent pins\" to tab context menu",
         "description": "Label for slider which adds reopen action to tab context menu"
+    },
+    "resetContextMenuSlider": {
+        "message": "Add \"Reset pinned tab to saved URL\" to tab context menu",
+        "description": "Label for slider which adds reset-tab action to tab context menu"
     },
     "pinInAllWindowsSlider": {
         "message": "Pin the websites in all opened windows",
