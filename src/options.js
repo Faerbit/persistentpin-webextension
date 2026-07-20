@@ -211,6 +211,11 @@ async function reopenContextMenuSlider(_event) {
     await setupMenuItems();
 }
 
+async function resetContextMenuSlider(_event) {
+    await storage.set_reset_context_menu_item(!!this.checked);
+    await setupMenuItems();
+}
+
 async function syncSlider(_event) {
     await storage.set_syncing(!!this.checked);
 }
@@ -226,6 +231,8 @@ async function load() {
     document.getElementById("grabContextMenuSlider").checked = await storage.get_grab_context_menu_item()
 
     document.getElementById("reopenContextMenuSlider").checked = await storage.get_reopen_context_menu_item();
+
+    document.getElementById("resetContextMenuSlider").checked = await storage.get_reset_context_menu_item();
 
     document.getElementById("pinInAllWindowsSlider").checked = await storage.get_pin_in_all_windows();
 
@@ -255,6 +262,7 @@ async function init() {
     document.getElementById("btn-delete").addEventListener("click", delete_);
     document.getElementById("grabContextMenuSlider").addEventListener("change", grabContextMenuSlider);
     document.getElementById("reopenContextMenuSlider").addEventListener("change", reopenContextMenuSlider);
+    document.getElementById("resetContextMenuSlider").addEventListener("change", resetContextMenuSlider);
     document.getElementById("syncSlider").addEventListener("change", syncSlider);
     document.getElementById("pinInAllWindowsSlider").addEventListener("change", pinInAllWindowsSlider);
 
