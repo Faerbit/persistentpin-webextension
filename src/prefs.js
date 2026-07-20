@@ -125,6 +125,30 @@ class Storage {
             browser.storage.local.set({"reopen_context_menu_item": value}).then(null, onError);
         }
     }
+
+    async get_reset_context_menu_item() {
+        let syncing = await this.get_syncing();
+        let p;
+        if (syncing) {
+            p = await browser.storage.sync.get("reset_context_menu_item");
+        } else {
+            p = await browser.storage.local.get("reset_context_menu_item");
+        }
+        if (!("reset_context_menu_item" in p)) {
+            return false;
+        } else {
+            return p.reset_context_menu_item;
+        }
+    }
+
+    async set_reset_context_menu_item(value) {
+        let syncing = await this.get_syncing();
+        if (syncing) {
+            browser.storage.sync.set({"reset_context_menu_item": value}).then(null, onError);
+        } else {
+            browser.storage.local.set({"reset_context_menu_item": value}).then(null, onError);
+        }
+    }
 }
 
 export var storage = new Storage();
