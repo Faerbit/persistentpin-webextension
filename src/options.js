@@ -229,7 +229,12 @@ async function load() {
 
     document.getElementById("pinInAllWindowsSlider").checked = await storage.get_pin_in_all_windows();
 
-    document.getElementById("syncSlider").checked = await storage.get_syncing();
+    const syncSlider = document.getElementById("syncSlider");
+    syncSlider.checked = await storage.get_syncing();
+    if (await storage.get_managed_syncing() !== undefined) {
+        syncSlider.disabled = true;
+        syncSlider.parentElement.title = browser.i18n.getMessage("syncSliderManaged");
+    }
 }
 
 function i18n() {

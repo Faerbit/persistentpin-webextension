@@ -1,7 +1,25 @@
 import {onError} from "./common.js";
 
 class Storage {
+    // An administrator can set "sync" through enterprise policy or a managed
+    // storage manifest. Firefox rejects the read when neither exists.
+    async get_managed_syncing() {
+        try {
+            let p = await browser.storage.managed.get("sync");
+            if (typeof p.sync === "boolean") {
+                return p.sync;
+            }
+        } catch (_error) {
+            // No managed storage configured
+        }
+        return undefined;
+    }
+
     async get_syncing() {
+        let managed = await this.get_managed_syncing();
+        if (managed !== undefined) {
+            return managed;
+        }
         let p = await browser.storage.local.get("sync");
         if (!("sync" in p)) {
             return false;
@@ -11,6 +29,9 @@ class Storage {
     }
 
     async set_syncing(syncing) {
+        if (await this.get_managed_syncing() !== undefined) {
+            return;
+        }
         if (syncing) {
             let getSynced = await browser.storage.sync.get("synced");
             if (getSynced.synced == null || !getSynced.synced) {

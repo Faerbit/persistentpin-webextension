@@ -47,6 +47,10 @@
         "message": "Synchronize settings with Firefox Sync (opt-in on every device)",
         "description": "Label for slider which controls add-on sync"
     },
+    "syncSliderManaged": {
+        "message": "This setting is managed by your administrator",
+        "description": "Tooltip for the sync slider when enterprise policy sets it"
+    },
     "emptyRow": {
         "message": "Empty",
         "description": "Empty row, is shown when no entries are available"
