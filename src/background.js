@@ -12,6 +12,7 @@ if (initialized === false) {
     await setupMenuItems();
 
     browser.windows.onCreated.addListener((newWindow) => {
+        if (newWindow.type && newWindow.type !== "normal") return;
         executeTabOpening(newWindow).then(null, onError);
     })
 }
