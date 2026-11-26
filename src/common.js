@@ -36,7 +36,7 @@ function openTabs(pinned_websites, openInAll, newWindow) {
       }
 
       if (openInAll) {
-        browser.windows.getAll().then(allWindows => {
+        browser.windows.getAll({windowTypes: ["normal"]}).then(allWindows => {
           resolve(allWindows.map(currentWindow => currentWindow.id));
         })
       } else {
