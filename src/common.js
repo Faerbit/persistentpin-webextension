@@ -5,7 +5,12 @@ export function onError(error) {
 }
 
 function openTabs(pinned_websites, openInAll, newWindow) {
-  let getExistingPinnedTabs = browser.tabs.query({ "pinned": true });
+  let queryInfo = { "pinned": true };
+  // When only pinning in the current window, do not remove pinned tabs elsewhere
+  if (!openInAll && !(newWindow && newWindow.id)) {
+    queryInfo.currentWindow = true;
+  }
+  let getExistingPinnedTabs = browser.tabs.query(queryInfo);
 
   new Promise((resolve) => {
     if (pinned_websites.length === 0) {
